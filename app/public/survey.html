@@ -16,7 +16,13 @@
     <!-- Chosen -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.jquery.min.js"></script>
-    <style>.chosen-container{width: 157px !important;}</style>
+    <style>
+        .chosen-container{width: 157px !important;}
+        #final{
+            width: 500px !important;
+            margin: auto;
+        }
+    </style>
 </head>
 
 <body>
@@ -175,7 +181,7 @@
                 <img id="match-img" src="#" alt="">
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default close" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -200,7 +206,9 @@
         for (var selector in config) {
           $(selector).chosen(config[selector]);
         }
-    
+        $(".close").on("click", function(){
+            $("#final").hide();
+        })
         // Capture the form inputs
         $("#submit").on("click", function(event) {
           event.preventDefault();
@@ -245,14 +253,14 @@
     
             // AJAX post the data to the friends API.
             $.post("/api/friends", userData, function(data) {
-    
+                console.log("doggy");
               // Grab the result from the AJAX post so that the best match's name and photo are displayed.
               $("#match-name").text(data.name);
               $("#match-img").attr("src", data.photo);
     
               // Show the modal with the best match
               $("#results-modal").modal("toggle");
-    
+                $("#final").show();
             });
           } else {
             alert("Please fill out all fields before submitting!");

@@ -1,27 +1,11 @@
 var friends = require("../data/friends")
 
 module.exports = function (app){
-
+    //simple json return
     app.get("/api/friends", function(req, res){
-        res.json("/data/friends.js");
+        res.json(friends);
     })
-    //incoming body 
-    // var userData = {
-    //     name: $("#name").val(),
-    //     photo: $("#photo").val(),
-    //     scores: [
-    //       $("#q1").val(),
-    //       $("#q2").val(),
-    //       $("#q3").val(),
-    //       $("#q4").val(),
-    //       $("#q5").val(),
-    //       $("#q6").val(),
-    //       $("#q7").val(),
-    //       $("#q8").val(),
-    //       $("#q9").val(),
-    //       $("#q10").val()
-    //     ]
-    //   };
+
     app.post("/api/friends", function(req, res){
         var bestMatch = {};
 
@@ -43,13 +27,18 @@ module.exports = function (app){
             if(!Array.isArray(bestMatch) || !bestMatch.length){
                 bestMatch.name = element.name;
                 bestMatch.score = min;
+                bestMatch.ret = element;
+                console.log(bestMatch);
+                console.log("Alien");
             }else if(bestMatch.score > min){
+                console.log("fighter");
                 //if the next person in friend array is closer to abs friend it switches them for the current match
                 bestMatch.name = element.name;
                 bestMatch.score = min;
+                bestMatch.ret = element;
             }
         });
-
+        res.json(bestMatch.ret);
         //now it adds the new person to the array
         friends.push(req.body);
     })

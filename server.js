@@ -4,6 +4,7 @@ var app = express();
 
 var PORT = 8080;
 
+app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
